@@ -16,12 +16,12 @@ public class PlayerController : MonoBehaviour
 	
 	private void OnEnable()
 	{
-		PlaySpace.Instance.OnClick += OnPlaySpaceClick;
+		GameManager.Instance.ActivePlaySpace.OnClick += OnPlaySpaceClick;
 	}
 
 	private void OnDisable()
 	{
-		PlaySpace.Instance.OnClick -= OnPlaySpaceClick;
+		GameManager.Instance.ActivePlaySpace.OnClick -= OnPlaySpaceClick;
 	}
 
 

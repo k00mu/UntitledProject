@@ -15,16 +15,22 @@ public enum PlaySpaceType
     World,
 }
 
-public class PlaySpace : MonoBehaviourSingleton<PlaySpace>
+public class PlaySpace : MonoBehaviour
 {
     [Header("Transforms")]
     [SerializeField] private Transform generalTransform;
     [SerializeField] private Transform uiTransform;
     [SerializeField] private Transform worldTransform;
+ 
+    [Header("Cameras")]
+    [SerializeField] private Camera cameraBrain;
+    [SerializeField] private CameraManager cameraManager;
+
+    [Header("Players")]
+    private Player activePlayer;
+    public Player ActivePlayer => activePlayer;
     
     public Action<Vector3> OnClick;
-    
-    private Transform playerTransform;
 
 
 
@@ -39,9 +45,11 @@ public class PlaySpace : MonoBehaviourSingleton<PlaySpace>
     /// </summary>
     private void Initialize()
     {
-        // TODO: refactor later, get Player class. Then in player class, all the player related stuff
-        playerTransform = Instantiate(MainResources.Instance.playerPrefab).transform;
-        AddToPlaySpace(playerTransform, PlaySpaceType.World);
+        activePlayer = Instantiate(MainResources.Instance.playerPrefab).GetComponent<Player>();
+        // add to camera manager target group
+        cameraManager.AddTarget(activePlayer.CameraReferenceTransform);
+        
+        AddToPlaySpace(activePlayer.transform, PlaySpaceType.World);
     }
 
 
