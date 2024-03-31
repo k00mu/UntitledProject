@@ -8,9 +8,13 @@ using UnityEngine;
 
 public class Item : MonoBehaviour, ICollectable
 {
-
+	[SerializeField] private ItemSO referenceSO;
+	public ItemSO ReferenceSO { get => referenceSO; set => referenceSO = value; }
+	
+	
 	public void Collect()
 	{
-		throw new System.NotImplementedException();
+		Debug.Log($"[Item] Collected {name}");
+		Destroy(gameObject);
 	}
 }

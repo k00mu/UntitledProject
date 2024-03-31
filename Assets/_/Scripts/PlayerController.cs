@@ -16,12 +16,12 @@ public class PlayerController : MonoBehaviour
 	
 	private void OnEnable()
 	{
-		GameManager.Instance.ActivePlaySpace.OnClick += OnPlaySpaceClick;
+		GameManager.Instance.ActivePlaySpace.OnClick += ActivePlaySpace_OnClick;
 	}
 
 	private void OnDisable()
 	{
-		GameManager.Instance.ActivePlaySpace.OnClick -= OnPlaySpaceClick;
+		GameManager.Instance.ActivePlaySpace.OnClick -= ActivePlaySpace_OnClick;
 	}
 
 
@@ -29,9 +29,9 @@ public class PlayerController : MonoBehaviour
 	/// Handles the click event on the play space.
 	/// </summary>
 	/// <param name="_position">The position where the click occurred.</param>
-	private void OnPlaySpaceClick(Vector3 _position)
+	private void ActivePlaySpace_OnClick(Vector3 _position)
 	{
-		Debug.Log($"[PlayerController] Clicked at: {_position}");
+		LogHelper.Log(nameof(PlayerController), nameof(ActivePlaySpace_OnClick), $"Clicked at: {_position}");
 		
 		SetPlayerDestination(_position);
 	}

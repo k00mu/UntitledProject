@@ -137,4 +137,24 @@ public class PlaySpace : MonoBehaviour
                 throw new ArgumentOutOfRangeException(nameof(_type), _type, null);
         }
     }
+
+
+    #region OnValidate
+
+    #if UNITY_EDITOR
+    
+    private void OnValidate()
+    {
+        // validate helper checks
+        ValidateHelper.CheckNull(generalTransform, nameof(generalTransform), nameof(PlaySpace));
+        ValidateHelper.CheckNull(uiTransform, nameof(uiTransform), nameof(PlaySpace));
+        ValidateHelper.CheckNull(worldTransform, nameof(worldTransform), nameof(PlaySpace));
+        ValidateHelper.CheckNull(cameraBrain, nameof(cameraBrain), nameof(PlaySpace));
+        ValidateHelper.CheckNull(cameraManager, nameof(cameraManager), nameof(PlaySpace));
+    }
+    
+    #endif
+
+    #endregion
+    
 }

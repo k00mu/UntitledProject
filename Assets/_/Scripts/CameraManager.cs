@@ -22,21 +22,92 @@ public class CameraManager : MonoBehaviour
 	[SerializeField] private CinemachineTargetGroup targetGroup;
 	
 	
+
+	#region TargetGroup
+
+	public void AddTarget(Transform _target, float _weight = 1, float _radius = 1)
+	{
+		targetGroup.AddMember(_target, _weight, _radius);
+	}
 	
+	public void RemoveTarget(Transform _target)
+	{
+		targetGroup.RemoveMember(_target);
+	}
+	
+	
+	public int TargetCount => targetGroup.m_Targets.Length;
+
+	#endregion
+	
+
+	#region VirtualCameras
+	
+	public CinemachineVirtualCamera GetVirtualCamera(int _index)
+	{
+		if (_index < 0 || _index >= virtualCameraList.Count)
+		{
+			LogHelper.LogError(nameof(CameraManager), nameof(GetVirtualCamera), $"Index out of range: {_index}");
+			return null;
+		}
+
+		return virtualCameraList[_index];
+	}
+	
+	public CinemachineVirtualCamera GetVirtualCamera(string _name)
+	{
+		foreach (CinemachineVirtualCamera virtualCamera in virtualCameraList)
+		{
+			if (virtualCamera.name == _name)
+			{
+				return virtualCamera;
+			}
+		}
+
+		LogHelper.LogError(nameof(CameraManager), nameof(GetVirtualCamera), $"VirtualCamera not found with name: {_name}");
+		return null;
+	}
+	
+	
+	public void SetActiveVirtualCamera(int _index)
+	{
+		if (_index < 0 || _index >= virtualCameraList.Count)
+		{
+			LogHelper.LogError(nameof(CameraManager), nameof(SetActiveVirtualCamera), $"Index out of range: {_index}");
+			return;
+		}
+
+		foreach (CinemachineVirtualCamera virtualCamera in virtualCameraList)
+		{
+			if (virtualCamera == virtualCameraList[_index])
+			{
+				virtualCamera.gameObject.SetActive(true);
+				continue;
+			}
+			
+			if (virtualCamera.gameObject.activeSelf)
+			{
+				virtualCamera.gameObject.SetActive(false);
+			}
+		}
+	}
+	
+	#endregion
+	
+		
 	#region OnValidate
+
+	#if UNITY_EDITOR
 	
 	private void OnValidate()
 	{
-		// if not dirty, return
+		// validate helper checks
+		ValidateHelper.CheckNull(targetGroup, nameof(targetGroup), nameof(CameraManager));
+		
+		// dirty checks
 		if (virtualCameraList.Count == transform.childCount)
 		{
 			return;
-		}
-		
-		// if there is no child, return
-		if (transform.childCount == 0)
-		{
-			Debug.LogWarning($"[CameraManager] No child found in CameraManager. Please add child with CinemachineVirtualCamera component.");
 		}
 		
 		PopulateVirtualCameraList();
@@ -64,83 +135,11 @@ public class CameraManager : MonoBehaviour
 			}
 
 			virtualCameraList.Add(virtualCamera);
-			Debug.Log($"[CameraManager] Child found with CinemachineVirtualCamera component: {child.name}");
 		}
 	}
+
+	#endif
 	
 	#endregion
 
-
-	#region TargetGroup
-
-	public void AddTarget(Transform _target, float _weight = 1, float _radius = 1)
-	{
-		targetGroup.AddMember(_target, _weight, _radius);
-	}
-	
-	public void RemoveTarget(Transform _target)
-	{
-		targetGroup.RemoveMember(_target);
-	}
-	
-	
-	public int TargetCount => targetGroup.m_Targets.Length;
-
-	#endregion
-	
-
-	#region VirtualCameras
-	
-	public CinemachineVirtualCamera GetVirtualCamera(int _index)
-	{
-		if (_index < 0 || _index >= virtualCameraList.Count)
-		{
-			Debug.LogError($"[CameraManager] Index out of range: {_index}");
-			return null;
-		}
-
-		return virtualCameraList[_index];
-	}
-	
-	public CinemachineVirtualCamera GetVirtualCamera(string _name)
-	{
-		foreach (CinemachineVirtualCamera virtualCamera in virtualCameraList)
-		{
-			if (virtualCamera.name == _name)
-			{
-				return virtualCamera;
-			}
-		}
-
-		Debug.LogError($"[CameraManager] VirtualCamera not found with name: {_name}");
-		return null;
-	}
-	
-	
-	public void SetActiveVirtualCamera(int _index)
-	{
-		if (_index < 0 || _index >= virtualCameraList.Count)
-		{
-			Debug.LogError($"[CameraManager] Index out of range: {_index}");
-			return;
-		}
-
-		foreach (CinemachineVirtualCamera virtualCamera in virtualCameraList)
-		{
-			if (virtualCamera == virtualCameraList[_index])
-			{
-				virtualCamera.gameObject.SetActive(true);
-				continue;
-			}
-			
-			if (virtualCamera.gameObject.activeSelf)
-			{
-				virtualCamera.gameObject.SetActive(false);
-			}
-		}
-	}
-	
-	#endregion
-	
-	
 }
