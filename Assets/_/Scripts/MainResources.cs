@@ -9,6 +9,9 @@ using UnityEngine;
 
 public class MainResources : ResourcesSingleton<MainResources>
 {
+	[Header("PlaySpaces")]
+	public GameObject[] playSpacePrefabs;
+	
 	[Header("Prefabs")]
 	public GameObject playerPrefab;
 	

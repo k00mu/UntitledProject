@@ -43,6 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5faa317fdc84e8440b31640be3fd2f63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playSpacePrefabs:
+  - {fileID: 8351133121747671954, guid: c930383c6dcee43479c425d3408ec8c9, type: 3}
   playerPrefab: {fileID: 3965533561881191764, guid: 765c964a5bf20684da23b0f0a5a41644, type: 3}
   groundLayerMask:
     serializedVersion: 2
