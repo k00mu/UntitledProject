@@ -4,8 +4,8 @@
 // 
 // ==================================================
 
-using System;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Dumpster : MonoBehaviour
 {
@@ -17,12 +17,12 @@ public class Dumpster : MonoBehaviour
 	
 	[Header("References")]
 	[SerializeField] private SphereCollider sphereCollider;
+	[SerializeField] private NavMeshObstacle navMeshObstacle;
 
 
 
 	private void OnTriggerEnter(Collider _other)
 	{
-		Debug.Log("Dumpster Triggered");
 		GameManager.Instance.ActivePlaySpace.CallToActionPopUpCanvas.SetFollowTarget(popUpPoint);
 		GameManager.Instance.ActivePlaySpace.CallToActionPopUpCanvas.ShowPopUp(() =>
 		{
@@ -33,7 +33,6 @@ public class Dumpster : MonoBehaviour
 
 	private void OnTriggerExit(Collider _other)
 	{
-		Debug.Log("Dumpster Exited");
 		GameManager.Instance.ActivePlaySpace.CallToActionPopUpCanvas.HidePopUp();
 	}
 	
@@ -46,8 +45,11 @@ public class Dumpster : MonoBehaviour
 	{
 		// validate helper checks
 		ValidateHelper.CheckNull(popUpPoint, nameof(popUpPoint), nameof(Dumpster));
+		ValidateHelper.CheckNull(sphereCollider, nameof(sphereCollider), nameof(Dumpster));
+		ValidateHelper.CheckNull(navMeshObstacle, nameof(navMeshObstacle), nameof(Dumpster));
 		
 		sphereCollider.center = visualTransform.localPosition;
+		navMeshObstacle.center = visualTransform.localPosition;
 	}
 	#endif
 	

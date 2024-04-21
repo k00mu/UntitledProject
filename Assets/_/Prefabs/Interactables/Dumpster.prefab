@@ -175,6 +175,7 @@ MonoBehaviour:
   visualTransform: {fileID: 3960429832084017001}
   popUpPoint: {fileID: 6294122413706963599}
   sphereCollider: {fileID: 2287019450160524597}
+  navMeshObstacle: {fileID: 7001541302926824508}
 --- !u!135 &2287019450160524597
 SphereCollider:
   m_ObjectHideFlags: 0

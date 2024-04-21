@@ -8,21 +8,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class CallToActionPopUpCanvas : MonoBehaviour
+public class CallToActionPopUpCanvas : CanvasWrapper
 {
-	[SerializeField] private Canvas canvas;
-	[SerializeField] private CanvasScaler canvasScaler;
-	[SerializeField] private GraphicRaycaster graphicRaycaster;
-	
 	[SerializeField] private FollowWorldObject followWorldObject;
 	
 	
 	public void ShowPopUp(UnityAction _onClick)
 	{
-		canvas.enabled = true;
-		canvasScaler.enabled = true;
-		graphicRaycaster.enabled = true;
-		
+		EnableCanvas();
 		followWorldObject.Button.onClick.AddListener(_onClick);
 	}
 	
@@ -30,10 +23,7 @@ public class CallToActionPopUpCanvas : MonoBehaviour
 	public void HidePopUp()
 	{
 		followWorldObject.GetComponent<Button>().onClick.RemoveAllListeners();
-		
-		canvas.enabled = false;
-		canvasScaler.enabled = false;
-		graphicRaycaster.enabled = false;
+		DisableCanvas();
 	}
 	
 	
