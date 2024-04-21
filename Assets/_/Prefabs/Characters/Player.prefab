@@ -51,7 +51,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraReferenceTransform: {fileID: 3559921486246786917}
   playerController: {fileID: 7433554011120415304}
-  inventory: []
   collectAbility: {fileID: 2310687828075701158}
 --- !u!114 &7433554011120415304
 MonoBehaviour:

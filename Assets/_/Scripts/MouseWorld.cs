@@ -5,27 +5,31 @@
 // ==================================================
 
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 
-public class MouseWorld : MonoBehaviourSingleton<MouseWorld>
+public class MouseWorld : MonoBehaviour
 {
-	private Camera targetCamera;
+	private static Camera targetCamera;
 
 
 
-	protected override void Awake()
+	private void Awake()
 	{
-		base.Awake();
-		
 		targetCamera = Camera.main;
 	}
 	
 	
 	public static Vector3 GetPosition()
 	{
-		Ray ray = Instance.targetCamera.ScreenPointToRay(Input.mousePosition);
+		Ray ray = targetCamera.ScreenPointToRay(Input.mousePosition);
 
-		return Physics.Raycast(ray, out var raycastHitInfo, float.MaxValue, MainResources.Instance.groundLayerMask)
+		if (EventSystem.current.IsPointerOverGameObject())
+		{
+			return Vector3.zero;
+		}
+		
+		return Physics.Raycast(ray, out RaycastHit raycastHitInfo, float.MaxValue, MainResources.Instance.groundLayerMask)
 			? raycastHitInfo.point
 			: Vector3.zero;
 	}
@@ -34,11 +38,16 @@ public class MouseWorld : MonoBehaviourSingleton<MouseWorld>
 	public static Vector3 GetPosition(int _touchIndex)
 	{
 		Touch touch = Input.GetTouch(_touchIndex);
-		Ray ray = Instance.targetCamera.ScreenPointToRay(touch.position);
+		Ray ray = targetCamera.ScreenPointToRay(touch.position);
+		
+		if (EventSystem.current.IsPointerOverGameObject())
+		{
+			return Vector3.zero;
+		}
 
-		return Physics.Raycast(ray, out var raycastHitInfo, float.MaxValue, MainResources.Instance.groundLayerMask)
+		return Physics.Raycast(ray, out RaycastHit raycastHitInfo, float.MaxValue, MainResources.Instance.groundLayerMask)
 			? raycastHitInfo.point
 			: Vector3.zero;
-	}
+	}	
 }
 

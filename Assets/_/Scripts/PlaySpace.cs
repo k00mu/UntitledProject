@@ -6,6 +6,8 @@
 
 using System;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 
 public enum PlaySpaceType
@@ -30,9 +32,18 @@ public class PlaySpace : MonoBehaviour
     private Player activePlayer;
     public Player ActivePlayer => activePlayer;
     
+    [Header("General References")]
+    [SerializeField] private NavMeshSurface navMeshSurface;
+    
+    [Header("UI References")]
+    [SerializeField] private HeadsUpDisplayCanvas headsUpDisplayCanvas;
+    public HeadsUpDisplayCanvas HeadsUpDisplayCanvas => headsUpDisplayCanvas;
+    [SerializeField] private CallToActionPopUpCanvas callToActionPopUpCanvas;
+    public CallToActionPopUpCanvas CallToActionPopUpCanvas => callToActionPopUpCanvas;
+    
+    
     public Action<Vector3> OnClick;
-
-
+    
 
     private void Start()
     {
@@ -136,6 +147,12 @@ public class PlaySpace : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException(nameof(_type), _type, null);
         }
+    }
+    
+    
+    public void RebakeNavMesh()
+    {
+        navMeshSurface.BuildNavMesh();
     }
 
 

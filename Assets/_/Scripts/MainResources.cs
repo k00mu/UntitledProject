@@ -17,6 +17,7 @@ public class MainResources : ResourcesSingleton<MainResources>
 	
 	[Header("Layer Masks")]
     public LayerMask groundLayerMask;
+    public LayerMask uiLayerMask;
 
 
 
@@ -29,6 +30,7 @@ public class MainResources : ResourcesSingleton<MainResources>
 		// validate helper checks
 		ValidateHelper.CheckNull(playerPrefab, nameof(playerPrefab), nameof(MainResources));
 		ValidateHelper.CheckZero(groundLayerMask, nameof(groundLayerMask), nameof(MainResources));
+		ValidateHelper.CheckZero(groundLayerMask, nameof(uiLayerMask), nameof(MainResources));
 	}
 
 	#endif

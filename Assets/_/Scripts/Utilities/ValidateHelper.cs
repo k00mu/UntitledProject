@@ -41,7 +41,7 @@ public static class ValidateHelper
 		return true;
 	}
 	
-	public static bool CheckEmpty(string _string, string _stringName, string _className)
+	public static bool CheckEmptyString(string _string, string _stringName, string _className)
 	{
 		if (string.IsNullOrEmpty(_string))
 		{

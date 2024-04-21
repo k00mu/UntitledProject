@@ -11,9 +11,9 @@ using UnityEngine.AI;
 public class PlayerController : MonoBehaviour
 {
 	[SerializeField] private NavMeshAgent navMeshAgent;
-	
-	
-	
+
+
+
 	private void OnEnable()
 	{
 		GameManager.Instance.ActivePlaySpace.OnClick += ActivePlaySpace_OnClick;
@@ -32,11 +32,11 @@ public class PlayerController : MonoBehaviour
 	private void ActivePlaySpace_OnClick(Vector3 _position)
 	{
 		LogHelper.Log(nameof(PlayerController), nameof(ActivePlaySpace_OnClick), $"Clicked at: {_position}");
-		
+		if (_position == Vector3.zero) { return; }
 		SetPlayerDestination(_position);
 	}
-	
-	
+
+
 	/// <summary>
 	/// Sets the destination of the player to the specified position.
 	/// </summary>
