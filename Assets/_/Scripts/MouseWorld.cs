@@ -48,6 +48,6 @@ public class MouseWorld : MonoBehaviour
 		return Physics.Raycast(ray, out RaycastHit raycastHitInfo, float.MaxValue, MainResources.Instance.groundLayerMask)
 			? raycastHitInfo.point
 			: Vector3.zero;
-	}	
+	}
 }
 
