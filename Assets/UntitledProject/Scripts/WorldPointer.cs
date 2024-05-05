@@ -1,9 +1,10 @@
 ﻿// ==================================================
 // 
-//   Created by atqamz
+//   Created by Atqa Munzir
 // 
 // ==================================================
 
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -11,43 +12,43 @@ namespace UntitledProject.Scripts
 {
 	public class WorldPointer : MonoBehaviour
 	{
-		private static Camera targetCamera;
-		[SerializeField] private static LayerMask targetLayerMask;
-
+		private static Camera _targetCamera;
+		private static LayerMask _targetLayerMask;
 
 
 		private void Awake()
 		{
-			targetCamera = Camera.main;
+			_targetCamera = Camera.main;
+			_targetLayerMask = LayerMask.GetMask(GlobalSetting.GroundLayerMask);
 		}
 	
 	
 		public static Vector3 GetPosition()
 		{
-			Ray ray = targetCamera.ScreenPointToRay(Input.mousePosition);
+			Ray ray = _targetCamera.ScreenPointToRay(Input.mousePosition);
 
 			if (EventSystem.current.IsPointerOverGameObject())
 			{
 				return Vector3.zero;
 			}
-		
-			return Physics.Raycast(ray, out RaycastHit raycastHitInfo, float.MaxValue, targetLayerMask)
+
+			return Physics.Raycast(ray, out RaycastHit raycastHitInfo, float.MaxValue, _targetLayerMask)
 				? raycastHitInfo.point
 				: Vector3.zero;
 		}
-	
-	
-		public static Vector3 GetPosition(int _touchIndex)
+
+
+		public static Vector3 GetPosition(int touchIndex)
 		{
-			Touch touch = Input.GetTouch(_touchIndex);
-			Ray ray = targetCamera.ScreenPointToRay(touch.position);
-		
+			Touch touch = Input.GetTouch(touchIndex);
+			Ray ray = _targetCamera.ScreenPointToRay(touch.position);
+
 			if (EventSystem.current.IsPointerOverGameObject())
 			{
 				return Vector3.zero;
 			}
 
-			return Physics.Raycast(ray, out RaycastHit raycastHitInfo, float.MaxValue, MainResources.Instance.groundLayerMask)
+			return Physics.Raycast(ray, out RaycastHit raycastHitInfo, float.MaxValue, _targetLayerMask)
 				? raycastHitInfo.point
 				: Vector3.zero;
 		}
